@@ -36,13 +36,16 @@ def quadrilateral(x, y): #return true if the point is outside the quadrilateral
     return True
 
 def is_valid(x,y=-1): #Returns True if the point of interest lies within navigable space
-    if isinstance(x, list):
-        assert y == -1
-        y = x[1]
-        x = x[0]
-    else:
-        assert isinstance(x,int)
-        assert isinstance(y,int) and y != -1
+    try:
+        if isinstance(x, list):
+            assert y == -1
+            y = x[1]
+            x = x[0]
+        else:
+            assert isinstance(x,int)
+            assert isinstance(y,int) and y != -1
+    except:
+        return False
     if rectangle(x,y) and circle(x,y) and hexagon(x,y) and quadrilateral(x,y):
         return True
     return False
