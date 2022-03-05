@@ -17,11 +17,9 @@ while (not is_valid(start) or not is_valid(goal)):
 
 debug = False
 
-start = [6,6]
-goal = [394,244]
 nodes = {} # maintains track of all generated nodes
 #key:tuple having x&y coordinates of a node, value:dictionary containing info about a node
-nodes[(start[0], start[1])] = {'parentX': -1, 'parentY': -1, 'cost': 0, 'index':0}
+nodes[(start[0], start[1])] = {'parentX': -1, 'parentY': -1, 'cost': 0}
 reached_goal = False
 
 open_q = []#(cost, (x-coordinate, y-coordinate)) ##maintains track of all generated bu not expanded nodes
@@ -31,11 +29,8 @@ hq.heapify(open_q)
 
 def generate_children(parent):
     (parent_x, parent_y) = parent
-    #parent_idx = nodes[(parent_x, parent_y)]['index']
-    #index = copy.copy(parent_idx)
     if debug:
         print('Expanding Node:', parent_x, parent_y, '\nChildren:')
-    #global open_q, nodes
     for i in [-1, 0, 1]:
         for j in [-1, 0, 1]:
             if (i==0 and j==0):
@@ -58,13 +53,11 @@ def generate_children(parent):
                     if debug:
                         print(child_x, child_y, child_cost)
             else:#if the child node doesn't exist previously, insert it to `nodes`
-                #index += 1
-                nodes[(child_x, child_y)] = {'parentX':parent_x, 'parentY':parent_y, 'cost':child_cost}#, 'index':index}
+                nodes[(child_x, child_y)] = {'parentX':parent_x, 'parentY':parent_y, 'cost':child_cost}
                 hq.heappush(open_q, (child_cost, (child_x, child_y)))
                 hq.heapify(open_q)
                 if debug:
                     print(child_x, child_y, child_cost)
-    # hq.heapify(open_q)
 
 
 def backtrack(goal_node_x, goal_node_y):
@@ -78,24 +71,13 @@ def backtrack(goal_node_x, goal_node_y):
 
 def visualize():
     img = copy.copy(map_img)
-    #img[0, 5] = [1,1,1]
     flipped_img = np.flip(img, 0)
-    #print(flipped_img[249, 5])
-    #cv2.imshow('frame', flipped_img)
-    #cv2.waitKey(0)
-    #return 
     for node in closed_q:
-        # img[node[0], node[1]] = [255, 255, 0]
-        # flipped_img = np.flip(img, 0)
-        # cv2.imshow('frame', img)
-        # cv2.waitKey(1)
         flipped_img[249-node[1], node[0]] = [255, 255, 0]
         cv2.imshow('frame', flipped_img)
         cv2.waitKey(1)
     for path_node in path[::-1]:
         flipped_img[249-path_node[1], path_node[0]] = [255, 0, 255]
-        # img[path_node[0], path_node[1]] = [255, 255, 0]
-        # flipped_img = np.flip(img, 0)
         cv2.imshow('frame', flipped_img)
         if path_node == path[0]:
             cv2.imwrite('solution.jpg', flipped_img)
@@ -123,11 +105,6 @@ while (not reached_goal) and (len(open_q) != 0):
 
 
 if reached_goal:
-    #print(np.amin(np.array(closed_q), axis=0), np.amax(np.array(closed_q), axis=0))
     visualize()
 else:
     print('************************************************ No solution found ************************************************')
-
-#generate_children(6,6)
-#for idx in range(len(open_q)):
-#    print(hq.heappop(open_q))
