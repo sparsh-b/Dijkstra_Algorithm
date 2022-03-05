@@ -6,7 +6,7 @@ import numpy as np
 
 def take_inputs():
     global start, goal
-    start = input('Enter the start node as x-coordinate,y-coordinate. Eg: 0,0\n')
+    start = input('Enter the start node as x-coordinate,y-coordinate. Eg: 6,6\n')
     goal = input('Enter the goal node as x-coordinate,y-coordinate. Eg: 394,244\n')
     start = [int(i) for i in start.split(',')]
     goal = [int(i) for i in goal.split(',')]
