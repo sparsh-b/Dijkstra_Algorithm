@@ -47,7 +47,7 @@ def is_valid(x,y=-1): #Returns True if the point of interest lies within navigab
         return True
     return False
 
-map_img = np.zeros((250, 400, 3))
+map_img = np.zeros((250, 400, 3)) #The obstacles are colored black & the navigable space is colored white.
 for i in range(400):
     for j in range(250):
         if rectangle(i, j) and circle(i,j) and hexagon(i,j) and quadrilateral(i,j):
