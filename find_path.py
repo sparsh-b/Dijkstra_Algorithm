@@ -83,7 +83,7 @@ def visualize():
             cv2.imwrite('solution.jpg', flipped_img)
             cv2.waitKey(0)
         else:
-            cv2.waitKey(100)
+            cv2.waitKey(10)
 
 while (not reached_goal) and (len(open_q) != 0):
     _, curr_node = hq.heappop(open_q)
